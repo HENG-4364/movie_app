@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/Data/list_movies.dart';
-import 'package:movie_app/Feature/Views/MovieDetailScreen/movie_detail_screeen.dart';
+import 'package:movie_app/Feature/widgets/now_playing.dart';
+import 'package:movie_app/Feature/widgets/popular.dart';
+import 'package:movie_app/Feature/widgets/top_rated.dart';
+import 'package:movie_app/Feature/widgets/upcoming.dart';
 
 class MovieTabs extends StatefulWidget {
   const MovieTabs({super.key});
 
   @override
-  State<MovieTabs> createState() => _MovieTabsState(); // Match class name here
+  State<MovieTabs> createState() => _MovieTabsState();
 }
 
 class _MovieTabsState extends State<MovieTabs> {
@@ -70,7 +72,7 @@ class _MovieTabsState extends State<MovieTabs> {
         ),
         const SizedBox(height: 20),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 0),
           child: _buildTabContent(),
         ),
       ],
@@ -80,51 +82,13 @@ class _MovieTabsState extends State<MovieTabs> {
   Widget _buildTabContent() {
     switch (categories[selectedIndex]) {
       case 'Upcoming':
-        return const Text('Showing Upcoming movies...');
+        return Upcoming();
       case 'Top rated':
-        return const Text('Showing Top Rated movies...');
+        return const TopRated();
       case 'Popular':
-        return const Text('Showing Popular movies...');
+        return Popular();
       default:
-        return Column(
-          children: [
-            GridView.builder(
-              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 8,
-                mainAxisSpacing: 12,
-                childAspectRatio: 2 / 3, // Common poster ratio (width:height = 2:3)
-              ),
-              itemCount: ListMovies.length,
-              itemBuilder: (context, index) {
-                final movie = ListMovies[index];
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder:
-                            (context) => MovieDetailScreeen(
-                        ),
-                      ),
-                    );
-                  },
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Image.asset(
-                      movie['thumbnail'],
-                      fit: BoxFit.cover, // Ensure consistent fill
-                    ),
-                  ),
-                );
-              },
-            ),
-
-          ],
-        );
+        return NowPlaying();
     }
   }
 }

@@ -3,7 +3,9 @@ import 'package:movie_app/Data/list_movies.dart';
 import 'package:movie_app/Feature/Views/MovieDetailScreen/movie_detail_screeen.dart';
 
 class MovieDetailTabs extends StatefulWidget {
-  const MovieDetailTabs({super.key});
+  final String description;
+
+  const MovieDetailTabs({super.key, required this.description});
 
   @override
   State<MovieDetailTabs> createState() => _MovieTabsState(); // Match class name here
@@ -66,22 +68,20 @@ class _MovieTabsState extends State<MovieDetailTabs> {
         const SizedBox(height: 20),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: _buildTabContent(),
+          child: _buildTabContent(description: widget.description),
         ),
       ],
     );
   }
 
-  Widget _buildTabContent() {
+  Widget _buildTabContent({required String description}) {
     switch (categories[selectedIndex]) {
       case 'Reviews':
         return const Text('Showing Reviews movies...');
       case 'Cast':
         return const Text('Showing Cast movies...');
       default:
-        return const Text(
-          'From DC Comics comes the Suicide Squad, an antihero team of incarcerated supervillains who act as deniable assets for the United States government, undertaking high-risk black ops missions in exchange for commuted prison sentences.',
-        );
+        return Text(description);
     }
   }
 }

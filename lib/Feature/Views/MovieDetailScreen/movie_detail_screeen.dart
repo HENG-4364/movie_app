@@ -4,13 +4,22 @@ import 'package:movie_app/Feature/widgets/movie_detail_tab.dart';
 import 'package:movie_app/constant.dart';
 
 class MovieDetailScreeen extends StatelessWidget {
-  const MovieDetailScreeen({super.key});
+  final String title;
+  final String description;
+  final String imageUrl;
+
+  const MovieDetailScreeen({
+    super.key,
+    required this.title,
+    required this.description,
+    required this.imageUrl,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text("Detail")),
+        title: Center(child: Text(title)),
         backgroundColor: kBackgroundColor,
         foregroundColor: Colors.white,
         actions: [
@@ -23,7 +32,12 @@ class MovieDetailScreeen extends StatelessWidget {
             Stack(
               clipBehavior: Clip.none,
               children: [
-                Image.asset("assets/movies/cover.png", fit: BoxFit.cover),
+                Image.network(
+                  imageUrl,
+                  fit: BoxFit.cover,
+                  height: 250,
+                  width: double.infinity,
+                ),
                 Positioned(
                   bottom: -90,
                   left: 20,
@@ -33,10 +47,7 @@ class MovieDetailScreeen extends StatelessWidget {
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(12),
-                            child: Image.asset(
-                              "assets/movies/movie-2.png",
-                              width: 95,
-                            ),
+                            child: Image.network(imageUrl, width: 95),
                           ),
                           SizedBox(width: 20),
                           Padding(
@@ -44,7 +55,7 @@ class MovieDetailScreeen extends StatelessWidget {
                             child: SizedBox(
                               width: 250,
                               child: Text(
-                                "Spiderman No Way Home",
+                                title,
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -66,19 +77,12 @@ class MovieDetailScreeen extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.calendar_today, color: kInActiveColor,size: 16,),
+                    Icon(Icons.calendar_today, color: kInActiveColor, size: 16),
                     SizedBox(width: 10),
-                    Text("2025", style: TextStyle(color: kInActiveColor,fontSize: 12)),
-                    SizedBox(width: 10),
-                    Text("|", style: TextStyle(color: kInActiveColor)),
-                  ],
-                ),
-                SizedBox(width: 10),
-                Row(
-                  children: [
-                    Icon(Icons.access_time_outlined, color: kInActiveColor,size: 16),
-                    SizedBox(width: 10),
-                    Text("148 Minutes", style: TextStyle(color: kInActiveColor,fontSize: 12)),
+                    Text(
+                      "2025",
+                      style: TextStyle(color: kInActiveColor, fontSize: 12),
+                    ),
                     SizedBox(width: 10),
                     Text("|", style: TextStyle(color: kInActiveColor)),
                   ],
@@ -86,16 +90,36 @@ class MovieDetailScreeen extends StatelessWidget {
                 SizedBox(width: 10),
                 Row(
                   children: [
-                    Icon(Icons.category, color: kInActiveColor,size: 16),
+                    Icon(
+                      Icons.access_time_outlined,
+                      color: kInActiveColor,
+                      size: 16,
+                    ),
                     SizedBox(width: 10),
-                    Text("Action", style: TextStyle(color: kInActiveColor,fontSize: 12)),
+                    Text(
+                      "148 Minutes",
+                      style: TextStyle(color: kInActiveColor, fontSize: 12),
+                    ),
+                    SizedBox(width: 10),
+                    Text("|", style: TextStyle(color: kInActiveColor)),
+                  ],
+                ),
+                SizedBox(width: 10),
+                Row(
+                  children: [
+                    Icon(Icons.category, color: kInActiveColor, size: 16),
+                    SizedBox(width: 10),
+                    Text(
+                      "Action",
+                      style: TextStyle(color: kInActiveColor, fontSize: 12),
+                    ),
                     SizedBox(width: 10),
                   ],
                 ),
               ],
             ),
             SizedBox(height: 20),
-            MovieDetailTabs()
+            MovieDetailTabs(description: description),
           ],
         ),
       ),
